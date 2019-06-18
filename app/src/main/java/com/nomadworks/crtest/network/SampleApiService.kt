@@ -2,10 +2,7 @@ package com.nomadworks.crtest.network
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber
@@ -19,10 +16,10 @@ class SampleApiService {
     }
 
     fun fetchPostEntriesAsync(): Deferred<List<PostEntry>> {
-        return GlobalScope.async {
-            Timber.d("[ktcr] #1 thread = ${Thread.currentThread()}")
+        return GlobalScope.async(Dispatchers.IO) {
+            Timber.d("[ktcr] #1 thread = ${Thread.currentThread().name}")
             delay(API_DELAY_MSEC)
-            Timber.d("[ktcr] #2 thread = ${Thread.currentThread()}")
+            Timber.d("[ktcr] #2 thread = ${Thread.currentThread().name}")
             fetchPostEntriesSync()
         }
     }

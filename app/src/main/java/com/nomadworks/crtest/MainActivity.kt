@@ -31,21 +31,21 @@ class MainActivity : AppCompatActivity() {
 
         btnFetch.setOnClickListener {
             txtResult.text = ""
-            Timber.d("[ktcr] #0 thread = ${Thread.currentThread()}")
+            Timber.d("[ktcr] #0 thread = ${Thread.currentThread().name}")
             val list = service.fetchPostEntriesAsync()
             lateinit var response: List<PostEntry>
             GlobalScope.launch {
-                Timber.d("[ktcr] #3 thread = ${Thread.currentThread()}")
+                Timber.d("[ktcr] #3 thread = ${Thread.currentThread().name}")
                 withContext(Dispatchers.Main) {
-                    Timber.d("[ktcr] #5 thread = ${Thread.currentThread()}")
+                    Timber.d("[ktcr] #5 thread = ${Thread.currentThread().name}")
                     response = list.await()
-                    Timber.d("[ktcr] #6 thread = ${Thread.currentThread()}")
+                    Timber.d("[ktcr] #6 thread = ${Thread.currentThread().name}")
                     txtResult.text = "$response"
                 }
             }
 
             // note: this would keep going while list.await() is suspended
-            Timber.d("[ktcr] #7 thread = ${Thread.currentThread()}")
+            Timber.d("[ktcr] #7 thread = ${Thread.currentThread().name}")
         }
     }
 }
