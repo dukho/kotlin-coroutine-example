@@ -28,11 +28,22 @@
 
     <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFetch"
-            android:text="Fetch"
+            android:text="Fetch (async)"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/btnTick"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/verticalGuide"
+    />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnFetchSuspend"
+            android:text="Fetch (suspend)"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnFetch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/verticalGuide"
     />

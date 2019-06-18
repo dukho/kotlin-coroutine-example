@@ -24,6 +24,15 @@ class SampleApiService {
         }
     }
 
+    suspend fun fetchPostEntriesSuspend(): List<PostEntry> {
+        return withContext(Dispatchers.IO) {
+            Timber.d("[ktcr] #1-1 thread = ${Thread.currentThread().name}")
+            delay(API_DELAY_MSEC)
+            Timber.d("[ktcr] #2-1 thread = ${Thread.currentThread().name}")
+            fetchPostEntriesSync()
+        }
+    }
+
     fun fetchPostEntriesSync(): List<PostEntry> {
         val request = Request.Builder().url(POST_LIST_ENDPOINT).build()
         val response = client.newCall(request).execute()
