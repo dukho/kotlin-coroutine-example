@@ -5,10 +5,7 @@ import android.os.Bundle
 import com.nomadworks.crtest.network.PostEntry
 import com.nomadworks.crtest.network.SampleApiService
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -70,6 +67,28 @@ class MainActivity : AppCompatActivity() {
 
             // note: this would keep going while list.await() is suspended
             Timber.d("[ktcr] #6-1 thread = ${Thread.currentThread().name}")
+        }
+
+        btnFetchSuspendAsync.setOnClickListener {
+            txtResult.text = ""
+            Timber.d("[ktcr] #0-11 thread = ${Thread.currentThread().name}")
+
+            GlobalScope.launch {
+                Timber.d("[ktcr] #0-21 thread = ${Thread.currentThread().name}")
+
+                // suspend should be called inside launch {} block
+                val list = async {
+                    service.fetchPostEntriesSuspend()
+                }
+                Timber.d("[ktcr] #4-11 thread = ${Thread.currentThread().name}")
+                withContext(Dispatchers.Main) {
+                    Timber.d("[ktcr] #5-11 thread = ${Thread.currentThread().name}")
+                    txtResult.text = "${list.await()}"
+                }
+            }
+
+            // note: this would keep going while list.await() is suspended
+            Timber.d("[ktcr] #6-11 thread = ${Thread.currentThread().name}")
         }
     }
 }
