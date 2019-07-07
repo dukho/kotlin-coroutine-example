@@ -1,7 +1,9 @@
-package com.nomadworks.crtest
+package com.nomadworks.crtest.screens
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.nomadworks.crtest.R
 import com.nomadworks.crtest.network.PostEntry
 import com.nomadworks.crtest.network.SampleApiService
 import kotlinx.android.synthetic.main.activity_main.*
@@ -89,6 +91,10 @@ class MainActivity : AppCompatActivity() {
 
             // note: this would keep going while list.await() is suspended
             Timber.d("[ktcr] #6-11 thread = ${Thread.currentThread().name}")
+        }
+
+        btnOpenViewModelScope.setOnClickListener {
+            startActivity(Intent(applicationContext, VmScopeActivity::class.java))
         }
     }
 }

@@ -15,6 +15,7 @@ class SampleApiService {
         private val POST_LIST_ENDPOINT = "https://jsonplaceholder.typicode.com/posts"
     }
 
+    //DON'T DO THIS
     fun fetchPostEntriesAsync(): Deferred<List<PostEntry>> {
         return GlobalScope.async(Dispatchers.IO) {
             Timber.d("[ktcr] #1 thread = ${Thread.currentThread().name}")
